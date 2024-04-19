@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+<!-- 리절트 맵 정의 -->	
+	<resultMap id="memberResult" type="MemberVO">
+		<result property="memberId" column="member_id" />
+		<result property="memberPw" column="member_pw" />
+		<result property="memberName" column="member_name" />
+		<result property="memberGender" column="member_gender" />
+		<result property="tel" column="tel" />
+		<result property="hp" column="hp" />
+		<result property="smsstsYn" column="smssts_yn" />
+		<result property="email" column="email" />
+		<result property="emailstsYn" column="emailsts_yn" />
+		<result property="zipcode" column="zipcode" />
+		<result property="roadAddress" column="roadAddress" />
+		<result property="jibunAddress" column="jibunAddress" />
+		<result property="namujiAddress" column="namujiAddress" />
+		<result property="ssn" column="ssn" />
+		<result property="createAt" column="create_at" />
+		<result property="delYn" column="del_yn" />
+		<result property="deletedAt" column="deleted_at" />
+		
+	</resultMap>	
+
+	<select id="login" resultMap="memberResult"  parameterType="java.util.Map"  >
+	    <![CDATA[
+			select * from member 
+			 where member_id=#{member_id}
+			 and member_pw=#{member_pw}			
+			 
+		]]>
+	</select>
+	
+	<select id="selectOverlappedID" parameterType="String" resultType="String">
+	   select decode(count(*),1, 'true', 0, 'false')
+	   from member
+	   where member_id = #{id}
+	</select>
+	
+  <insert id="insertNewMember"  parameterType="memberVO">
+  <![CDATA[
+    	insert into member(member_id,
+				 					 member_pw,
+                                     member_name,
+                                     member_gender,
+                                     tel,
+                                     hp,
+                                     smssts_yn,
+                                     email,
+                                     emailsts_yn,
+                                     zipcode,
+                                     roadAddress,
+                                     jibunAddress,
+                                     namujiAddress,
+                                     ssn,
+                                     crate_at,
+                                     del_yn,
+                                     deleted_at)
+							 values(#{member_id},
+									#{member_pw},
+									#{member_name},
+                                 	#{member_gender},
+                                    #{tel},
+                                    #{hp},
+                                    #{smssts_yn},
+                                    #{email},
+                                    #{emailsts_yn},
+                                    #{zipcode},
+                                    #{roadAddress},
+                                    #{jibunAddress},
+                                    #{namujiAddress},
+                                    #{ssn},
+                                    #{create_at},
+                                    #{del_yn},
+                                    #{deleted_at},
+                                    )
+                                  
+                                      
+   ]]>      
+  </insert>
+</mapper>
